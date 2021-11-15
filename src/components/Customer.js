@@ -14,27 +14,27 @@ const Customers = (props) => {
         setCustomers(responseData.content) ;             
     })            
     .catch(err => console.error(err))
-    }, []);
+    }, [props.cUrl]);
 
     const rowData = customers.map((customer) => ({
-        firstname: customer.firstname,
-        lastname: customer.lastname,
-        streetaddress: customer.streetaddress,
-        postcode: customer.streetaddress,
-        city: customer.city,
-        email: customer.email,
-        phone: customer.phone,}));
+        Firstname: customer.firstname,
+        Lastname: customer.lastname,
+        Streetaddress: customer.streetaddress,
+        Postcode: customer.streetaddress,
+        City: customer.city,
+        Email: customer.email,
+        Phone: customer.phone,}));
 
-    const rowHeaders = ['firstname',
-        'lastname',
-        'streetaddress',
-        'postcode',
-        'city',
-        'email',
-        'phone'];
+    const rowHeaders = ['Firstname',
+        'Lastname',
+        'Streetaddress',
+        'Postcode',
+        'City',
+        'Email',
+        'Phone'];
 
    const columns = rowHeaders.map((i) => ({
-       headerName: i, field:i, sortable:true, filter:true, floatingFilter:true
+       headerName: i, resizable:true, field: i, sortable:true, filter:true, floatingFilter:true
    }));
 
    return (

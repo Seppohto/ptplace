@@ -14,16 +14,16 @@ const Trainings = (props) => {
         setTrainings(responseData.content) ;             
     })            
     .catch(err => console.error(err))
-    }, []);
+    }, [props.tUrl]);
 
     const rowData = trainings.map((trainings) => ({
-        date: dayjs(trainings.date),
-        duration: trainings.duration,
-        activity: trainings.activity}));
+        Date: dayjs(trainings.date).format('ddd HH:mm - DD.MM.YYYY'),
+        Duration: trainings.duration,
+        Activity: trainings.activity}));
 
-    const rowHeaders = ['date',
-        'duration',
-        'activity'];
+    const rowHeaders = ['Date',
+        'Duration',
+        'Activity'];
 
    const columns = rowHeaders.map((i) => ({
        headerName: i, field:i, sortable:true, resizable:true, filter:true, floatingFilter:true
