@@ -7,7 +7,9 @@ import Home from './Home'
 import NotFound from './NotFound'
 import About from './About';
 import Customers from './Customer';
-import Trainings from './Trainings'
+import Trainings from './Trainings';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 export default function NavTabs() {
@@ -18,7 +20,8 @@ export default function NavTabs() {
     setRoute(newRoute);
   };
   //navtabs end
-  //customer fetch start
+
+  //customer section
   const [cusData, setCusData] = useState([]);
 
   useEffect(() => fetchCusData(), []);
@@ -29,8 +32,46 @@ export default function NavTabs() {
     .then(data => {setCusData(data.content) ;           
     })            
     .catch(err => console.error(err))
-    }   
-  //customers fetch end
+  }   
+
+  const deleteCustomer = (link) => {
+    if (window.confirm('Are you sure?')){
+    handleClick();
+    fetch(link, {method: 'DELETE'})
+    .then(res => fetchCusData())
+    .catch(err => console.error(err))
+    }
+  };
+
+  const saveCustomer = (customer) => {
+    if (window.confirm('Add this new customer?')){
+    handleClick();
+    fetch('https://customerrest.herokuapp.com/api/customers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(customer)
+    })
+    .then(res => fetchCusData())
+    .catch(err => console.error(err))
+    }
+  };
+
+  const updateCustomer = (customer, link) => {
+    fetch(link, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(customer)
+    })
+    .then(res => fetchCusData())
+    .catch(err => console.error(err))        
+  };
+
+  //customers end
+
   //training fetch start
   const [traiData, setTraiData] = useState([]);
 
@@ -42,16 +83,36 @@ export default function NavTabs() {
     .then(data => {setTraiData(data.content) ;           
     })            
     .catch(err => console.error(err))
-    }   
+  }   
   //trainings fetch end
   
-  console.log(traiData);
+      //Snackbar config
 
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+    
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpen(false);
+    };
  
   return (
-    <div>
-    <Box sx={{ width: '100%' }}>
-      
+    <div style={{height: 800, width: "max"}}>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        Action done succesfully!
+      </Alert>
+    </Snackbar>
+    <Box sx={{ width: '100%' }}>      
     <BrowserRouter>
         <Tabs value={route} onChange={handleRChange} aria-label="nav tabs example">
             <Tab label="Home" component={Link} to="/" />
@@ -62,7 +123,8 @@ export default function NavTabs() {
         <Routes>
           <Route exact path="/" element={<Home />}/>
           <Route path="/components/About" element={<About />} />
-          <Route path="/components/Customers" element={<Customers customers={cusData}/>} />
+          <Route path="/components/Customers" element={<Customers customers={cusData} 
+          deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
           <Route path="/components/Trainings" element={<Trainings trainings={traiData}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>

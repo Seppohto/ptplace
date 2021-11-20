@@ -13,8 +13,8 @@ export default function Trainings(props) {
        // Date: dayjs(trainings.date).format('ddd HH:mm - DD.MM.YYYY'),
 
     const columns = [
-        {headerName: 'Date', resizable: true, field: 'date', sortable:true, filter:true, floatingFilter:true, width:180}
-        ,{headerName: 'Duration', resizable: true, field: 'duration', sortable:true, filter:true, floatingFilter:true, width:180}
+        {headerName: 'Date', resizable: true, field: 'date', sortable:true, filter:true, floatingFilter:true, width:200}
+        ,{headerName: 'Duration', resizable: true, field: 'duration', sortable:true, filter:true, floatingFilter:true, width:110}
         ,{headerName: 'Activity', resizable: true, field: 'activity', sortable:true, filter:true, floatingFilter:true, width:200}
         ];
 
@@ -22,6 +22,7 @@ export default function Trainings(props) {
        <div className="ag-theme-alpine" style={{height: 800, width: "max"}}>
            <AgGridReact
                rowData={rowData}
+               animateRows={true}
                columnDefs={columns}>
            </AgGridReact>
        </div>
