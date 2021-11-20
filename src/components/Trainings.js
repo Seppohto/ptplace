@@ -4,30 +4,19 @@ import dayjs from 'dayjs'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-const Trainings = (props) => {    
-  const [trainings, setTrainings] = React.useState([]);
+export default function Trainings(props) {
 
-   React.useEffect(() =>  {
-    fetch(props.tUrl)
-    .then(response => response.json())
-    .then(responseData => {
-        setTrainings(responseData.content) ;             
-    })            
-    .catch(err => console.error(err))
-    }, [props.tUrl]);
+    const rowData = props.trainings.map((trainings) => ({
+        ...trainings, date: dayjs(trainings.date).format('ddd HH:mm - DD.MM.YYYY')
+    }))
+      
+       // Date: dayjs(trainings.date).format('ddd HH:mm - DD.MM.YYYY'),
 
-    const rowData = trainings.map((trainings) => ({
-        Date: dayjs(trainings.date).format('ddd HH:mm - DD.MM.YYYY'),
-        Duration: trainings.duration,
-        Activity: trainings.activity}));
-
-    const rowHeaders = ['Date',
-        'Duration',
-        'Activity'];
-
-   const columns = rowHeaders.map((i) => ({
-       headerName: i, field:i, sortable:true, resizable:true, filter:true, floatingFilter:true
-   }));
+    const columns = [
+        {headerName: 'Date', resizable: true, field: 'date', sortable:true, filter:true, floatingFilter:true, width:180}
+        ,{headerName: 'Duration', resizable: true, field: 'duration', sortable:true, filter:true, floatingFilter:true, width:180}
+        ,{headerName: 'Activity', resizable: true, field: 'activity', sortable:true, filter:true, floatingFilter:true, width:200}
+        ];
 
    return (
        <div className="ag-theme-alpine" style={{height: 800, width: "max"}}>
@@ -37,6 +26,4 @@ const Trainings = (props) => {
            </AgGridReact>
        </div>
    );
-};
-
-export default Trainings;
+}
