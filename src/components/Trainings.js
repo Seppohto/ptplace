@@ -3,6 +3,9 @@ import { AgGridReact} from 'ag-grid-react';
 import dayjs from 'dayjs'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import Button from '@mui/material/Button';
+import EditTraining from './EditTrainings';
+import AddCustomer from './AddCustomer';
 
 export default function Trainings(props) {
 
@@ -16,10 +19,20 @@ export default function Trainings(props) {
         {headerName: 'Date', resizable: true, field: 'date', sortable:true, filter:true, floatingFilter:true, width:200}
         ,{headerName: 'Duration', resizable: true, field: 'duration', sortable:true, filter:true, floatingFilter:true, width:110}
         ,{headerName: 'Activity', resizable: true, field: 'activity', sortable:true, filter:true, floatingFilter:true, width:200}
+        ,{headerName: 'Edit', width: 160, 
+            cellRendererFramework: function(params) {
+                return <EditTraining updateTraining={props.updateTraining} training={params.data}/>
+        },}
+        ,{headerName: 'Delete', resizable: true, width:120, 
+            cellRendererFramework: function(params) {
+                return <Button size="small" variant="outlined" color="error"
+            onClick={() =>props.deleteTraining(params.data.links[0].href)}> Delete </Button>
+        },}
         ];
 
    return (
        <div className="ag-theme-alpine" style={{height: 800, width: "max"}}>
+           <AddCustomer saveCustomer={props.saveCustomer}/> 
            <AgGridReact
                rowData={rowData}
                animateRows={true}
