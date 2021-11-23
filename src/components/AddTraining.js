@@ -10,12 +10,13 @@ import Stack from '@mui/material/Stack';
 import DateAdapter from '@mui/lab/AdapterDayjs';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import MenuItem from '@mui/material/MenuItem';
 
 
 export default function AddTrainings(props) {
   const [open, setOpen] = React.useState(false);
   const [training, setTraining] = React.useState({
-    date: '', duration: '', activity: '', 
+    date: '', duration: '', activity: '', customer: ''
   });
 
   const handleChange = (newValue) => {
@@ -77,6 +78,21 @@ export default function AddTrainings(props) {
             fullWidth
             onChange={e => handleInputChange(e)}
           />
+         <TextField
+          id="customer"
+          select
+          label="Select Customer"
+          value={training.customer}
+          name="customer"
+          onChange={e => handleInputChange(e)}
+          helperText="Customer linked to this training"
+        >
+          {props.customers.map((customer, idx) => (
+            <MenuItem key={idx} value={customer.links[0].href}>
+              {customer.firstname} {customer.lastname}
+            </MenuItem>
+          ))}
+        </TextField>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

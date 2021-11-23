@@ -78,9 +78,9 @@ export default function NavTabs() {
   useEffect(() => fetchTraiData(), []);
 
   const fetchTraiData = () => {
-    fetch('https://customerrest.herokuapp.com/api/trainings')
+    fetch('https://customerrest.herokuapp.com/gettrainings')
     .then(response => response.json())
-    .then(data => {setTraiData(data.content) ;           
+    .then(data => {setTraiData(data) ;           
     })            
     .catch(err => console.error(err))
   }      
@@ -161,7 +161,7 @@ export default function NavTabs() {
           <Route path="/components/About" element={<About />} />
           <Route path="/components/Customers" element={<Customers customers={cusData} 
           deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
-          <Route path="/components/Trainings" element={<Trainings trainings={traiData}
+          <Route path="/components/Trainings" element={<Trainings trainings={traiData} customers={cusData} 
           deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
