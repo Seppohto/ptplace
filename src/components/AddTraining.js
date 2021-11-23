@@ -12,7 +12,6 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import MenuItem from '@mui/material/MenuItem';
 
-
 export default function AddTrainings(props) {
   const [open, setOpen] = React.useState(false);
   const [training, setTraining] = React.useState({
@@ -79,6 +78,7 @@ export default function AddTrainings(props) {
             onChange={e => handleInputChange(e)}
           />
          <TextField
+          margin="dense"
           id="customer"
           select
           label="Select Customer"

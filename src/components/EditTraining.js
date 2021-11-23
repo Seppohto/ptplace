@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import DateAdapter from '@mui/lab/AdapterDayjs';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function EditTraining(props) {
   const [open, setOpen] = React.useState(false);
@@ -17,7 +18,7 @@ export default function EditTraining(props) {
     date: '', duration: '', activity: '', 
   });
 
-
+  console.log(training);
   const handleChange = (newValue) => {
     setTraining({...training, date: newValue})
   };
@@ -37,7 +38,7 @@ export default function EditTraining(props) {
   }
 
   const updateTraining =  () => {
-      props.updateTraining(training, props.training.links[0].href);
+      props.updateTraining(training, props.training.id);
       handleClose();
   }
 
@@ -78,6 +79,15 @@ export default function EditTraining(props) {
             label="Activity"
             fullWidth
             onChange={e => handleInputChange(e)}
+          />
+          <TextField
+            margin="dense"
+            name="customer"
+            value={props.customer}
+            label="Customer"
+            fullWidth
+            onChange={e => handleInputChange(e)}
+            disabled
           />
         </DialogContent>
         <DialogActions>

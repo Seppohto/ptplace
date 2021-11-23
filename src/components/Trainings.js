@@ -7,9 +7,7 @@ import Button from '@mui/material/Button';
 import EditTraining from './EditTraining';
 import AddTraining from './AddTraining';
 
-export default function Trainings(props) {   
-    
-    console.log(props.trainings)
+export default function Trainings(props) {
 
     const columns = [
         {headerName: 'Date', resizable: true, field: 'date', sortable:true, filter:true, floatingFilter:true, width:200,
@@ -24,7 +22,7 @@ export default function Trainings(props) {
         },}
         ,{headerName: 'Edit', width: 160, 
             cellRendererFramework: function(params) {
-                return <EditTraining updateTraining={props.updateTraining} training={params.data}/>
+                return <EditTraining updateTraining={props.updateTraining} training={params.data} customer={params.data.customer.firstname + " " + params.data.customer.lastname}/>
         },}
         ,{headerName: 'Delete', resizable: true, width:120, 
             cellRendererFramework: function(params) {

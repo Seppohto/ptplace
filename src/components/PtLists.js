@@ -110,7 +110,7 @@ export default function NavTabs() {
   };
 
   const updateTraining = (training, link) => {
-    fetch(link, {
+    fetch('https://customerrest.herokuapp.com/api/trainings/'+link, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
