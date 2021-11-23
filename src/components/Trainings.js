@@ -27,7 +27,7 @@ export default function Trainings(props) {
         ,{headerName: 'Delete', resizable: true, width:120, 
             cellRendererFramework: function(params) {
                 return <Button size="small" variant="outlined" color="error"
-            onClick={() =>props.deleteTraining(params.data.links[0].href)}> Delete </Button>
+            onClick={() =>props.deleteTraining(params.data.id)}> Delete </Button>
         },}        
         ];
 

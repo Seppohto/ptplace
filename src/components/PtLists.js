@@ -10,7 +10,7 @@ import Customers from './Customer';
 import Trainings from './Trainings';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import Calendar from './Calendar';
 
 export default function NavTabs() {
   //navtabs start
@@ -88,7 +88,8 @@ export default function NavTabs() {
   const deleteTraining = (link) => {
     if (window.confirm('Are you sure you want to delete the training?')){
     handleClick();
-    fetch(link, {method: 'DELETE'})
+    fetch('https://customerrest.herokuapp.com/api/trainings/'+link,
+      {method: 'DELETE'})
     .then(res => fetchTraiData())
     .catch(err => console.error(err))
     }
@@ -154,11 +155,13 @@ export default function NavTabs() {
             <Tab label="Home" component={Link} to="/" />
             <Tab label="Customers" component={Link} to="/components/Customers" />
             <Tab label="Trainings" component={Link} to="/components/Trainings" />
+            <Tab label="Calendar" component={Link} to="/components/Calendar" />
             <Tab label="About" component={Link} to="/components/About" />
         </Tabs>
         <Routes>
           <Route exact path="/" element={<Home />}/>
           <Route path="/components/About" element={<About />} />
+          <Route path="/components/Calendar" element={<Calendar />} />
           <Route path="/components/Customers" element={<Customers customers={cusData} 
           deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
           <Route path="/components/Trainings" element={<Trainings trainings={traiData} customers={cusData} 
