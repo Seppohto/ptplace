@@ -10,7 +10,6 @@ import Stack from '@mui/material/Stack';
 import DateAdapter from '@mui/lab/AdapterDayjs';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import MenuItem from '@mui/material/MenuItem';
 
 export default function EditTraining(props) {
   const [open, setOpen] = React.useState(false);
@@ -18,7 +17,6 @@ export default function EditTraining(props) {
     date: '', duration: '', activity: '', 
   });
 
-  console.log(training);
   const handleChange = (newValue) => {
     setTraining({...training, date: newValue})
   };
