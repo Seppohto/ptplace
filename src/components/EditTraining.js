@@ -6,12 +6,21 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
+import DateAdapter from '@mui/lab/AdapterDayjs';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 export default function EditTraining(props) {
   const [open, setOpen] = React.useState(false);
   const [training, setTraining] = React.useState({
     date: '', duration: '', activity: '', 
   });
+
+
+  const handleChange = (newValue) => {
+    setTraining({...training, date: newValue})
+  };
 
   const handleClickOpen = () => {
     setTraining({date: props.training.date, duration: props.training.duration, 
@@ -43,15 +52,17 @@ export default function EditTraining(props) {
           <DialogContentText>
             Choose what to edit
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            name="date"
-            value={training.date}
-            label="Date"
-            fullWidth
-            onChange={e => handleInputChange(e)}
-          />
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <Stack spacing={3}>
+              <DateTimePicker
+                label="Date&Time picker"
+                ampm={false}
+                value={training.date}
+                onChange={handleChange}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </Stack>
+          </LocalizationProvider>
           <TextField
             margin="dense"
             name="duration"

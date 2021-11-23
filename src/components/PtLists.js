@@ -83,7 +83,43 @@ export default function NavTabs() {
     .then(data => {setTraiData(data.content) ;           
     })            
     .catch(err => console.error(err))
-  }   
+  }      
+
+  const deleteTraining = (link) => {
+    if (window.confirm('Are you sure you want to delete the training?')){
+    handleClick();
+    fetch(link, {method: 'DELETE'})
+    .then(res => fetchTraiData())
+    .catch(err => console.error(err))
+    }
+  };
+
+  const saveTraining = (training) => {
+    if (window.confirm('Add this new training?')){
+    handleClick();
+    fetch('https://customerrest.herokuapp.com/api/trainings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(training)
+    })
+    .then(res => fetchTraiData())
+    .catch(err => console.error(err))
+    }
+  };
+
+  const updateTraining = (training, link) => {
+    fetch(link, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(training)
+    })
+    .then(res => fetchTraiData())
+    .catch(err => console.error(err))        
+  };
   //trainings fetch end
   
       //Snackbar config
@@ -114,7 +150,7 @@ export default function NavTabs() {
     </Snackbar>
     <Box sx={{ width: '100%' }}>      
     <BrowserRouter>
-        <Tabs value={route} onChange={handleRChange} aria-label="nav tabs example">
+        <Tabs value={route} onChange={handleRChange} >
             <Tab label="Home" component={Link} to="/" />
             <Tab label="Customers" component={Link} to="/components/Customers" />
             <Tab label="Trainings" component={Link} to="/components/Trainings" />
@@ -125,7 +161,8 @@ export default function NavTabs() {
           <Route path="/components/About" element={<About />} />
           <Route path="/components/Customers" element={<Customers customers={cusData} 
           deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
-          <Route path="/components/Trainings" element={<Trainings trainings={traiData}/>} />
+          <Route path="/components/Trainings" element={<Trainings trainings={traiData}
+          deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>

@@ -7,9 +7,6 @@ import EditCustomer from './EditCustomer';
 import Button from '@mui/material/Button';
 
 export default function Customers(props) {
-
-    console.log(props.customers)
-    console.log(props.customers[0].links[0].href)
     
     const columns = [
         {headerName: 'Firstname', resizable: true, field: 'firstname', sortable:true, filter:true, floatingFilter:true, width:180}
