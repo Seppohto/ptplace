@@ -72,7 +72,7 @@ export default function NavTabs() {
 
   //customers end
 
-  //training fetch start
+  //training fetch startnpm run
   const [traiData, setTraiData] = useState([]);
 
   useEffect(() => fetchTraiData(), []);
@@ -161,7 +161,8 @@ export default function NavTabs() {
         <Routes>
           <Route exact path="/" element={<Home />}/>
           <Route path="/components/About" element={<About />} />
-          <Route path="/components/Calendar" element={<Calendar />} />
+          <Route path="/components/Calendar" element={<Calendar trainings={traiData} customers={cusData} 
+          deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining} />} />
           <Route path="/components/Customers" element={<Customers customers={cusData} 
           deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
           <Route path="/components/Trainings" element={<Trainings trainings={traiData} customers={cusData} 
