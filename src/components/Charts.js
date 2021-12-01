@@ -36,7 +36,7 @@ console.log(trainingsSumData);
         left: 20,
         bottom: 5
       }}
-      barSize={30}
+      barSize={70}
     >
       <XAxis dataKey='activity' scale="point" padding={{ left: 10, right: 10 }} />
       <YAxis />
