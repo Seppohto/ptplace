@@ -11,6 +11,7 @@ import Trainings from './Trainings';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Calendar from './Calendar';
+import Charts from './Charts'
 
 export default function NavTabs() {
   //navtabs start
@@ -156,17 +157,19 @@ export default function NavTabs() {
             <Tab label="Customers" component={Link} to="/components/Customers" />
             <Tab label="Trainings" component={Link} to="/components/Trainings" />
             <Tab label="Calendar" component={Link} to="/components/Calendar" />
+            <Tab label="Charts" component={Link} to="/components/Charts" />
             <Tab label="About" component={Link} to="/components/About" />
         </Tabs>
         <Routes>
           <Route exact path="/" element={<Home />}/>
           <Route path="/components/About" element={<About />} />
           <Route path="/components/Calendar" element={<Calendar trainings={traiData} customers={cusData} 
-          deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining} />} />
+            deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining} />} />
           <Route path="/components/Customers" element={<Customers customers={cusData} 
-          deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
+            deleteCustomer={deleteCustomer} saveCustomer={saveCustomer} updateCustomer={updateCustomer}/>} />
           <Route path="/components/Trainings" element={<Trainings trainings={traiData} customers={cusData} 
-          deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining}/>} />
+            deleteTraining={deleteTraining} saveTraining={saveTraining} updateTraining={updateTraining}/>} />
+          <Route path="/components/Charts" element={<Charts trainings={traiData}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>

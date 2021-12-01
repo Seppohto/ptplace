@@ -56,6 +56,7 @@ export default function AddTrainings(props) {
                 label="Date&Time picker"                
                 ampm={false}
                 value={training.date}
+                inputFormat="DD/MM/YYYY hh:mm"
                 onChange={handleChange}
                 renderInput={(params) => <TextField {...params} />}
               />

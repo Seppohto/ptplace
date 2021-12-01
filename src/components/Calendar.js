@@ -4,21 +4,57 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayjs from 'dayjs'
-import AddTraining from './AddTraining';
-
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
+import DateAdapter from '@mui/lab/AdapterDayjs';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function Calendar(props) {
     
     const events = props.trainings.map((training) => ({
-        id: training.id,
-        title: training.activity + " / " 
-        + training.customer.firstname + " " + training.customer.lastname,
-        start: training.date,
-        end: dayjs(training.date).add(training.duration, 'minutes').$d
-        }));
+      id: training.id,
+      title: training.activity + " / " 
+      + training.customer.firstname + " " + training.customer.lastname,
+      start: training.date,
+      end: dayjs(training.date).add(training.duration, 'minutes').$d
+      }));
         
-       // console.log(props.trainings);
-       // console.log(dayjs(props.trainings[0].date).add(props.trainings[0].duration, 'minutes'));
+      
+
+       //Add new Functionality below
+    const [open, setOpen] = React.useState(false);
+    const [training, setTraining] = React.useState({
+      date: '', duration: '', activity: '', customer: ''
+    });
+
+    const handleChange = (newValue) => {
+      setTraining({...training, date: newValue})
+    };
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const handleInputChange = (event) => {
+      setTraining({...training, [event.target.name]: event.target.value})
+    }
+
+    const addTraining =  () => {
+        props.saveTraining(training);
+        handleClose();
+    }
 
     return (
         <div className="App">
@@ -31,11 +67,7 @@ export default function Calendar(props) {
             customButtons={{
               new: {
                 text: 'new',
-                click: () => console.log('new event'),
-              },
-              needitw: {
-                text: 'edit',
-                click: () => console.log('edit event'),
+                click: () => handleClickOpen(),
               },
             }}
             events={events}
@@ -43,6 +75,63 @@ export default function Calendar(props) {
             dateClick={(e) => console.log(e.dateStr)}
             eventClick={(e) => console.log(e.event.id)}
           />
+
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>New training</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Fill in training information
+              </DialogContentText>
+              <LocalizationProvider dateAdapter={DateAdapter}>
+                <Stack spacing={3}>
+                  <DateTimePicker
+                    label="Date&Time picker"                
+                    ampm={false}
+                    value={training.date}
+                    inputFormat="DD/MM/YYYY hh:mm"
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Stack>
+              </LocalizationProvider>
+              <TextField
+                margin="dense"
+                name="duration"
+                value={training.duration}
+                label="Duration"
+                fullWidth
+                onChange={e => handleInputChange(e)}
+              />
+              <TextField
+                margin="dense"
+                name="activity"
+                value={training.activity}
+                label="Activity"
+                fullWidth
+                onChange={e => handleInputChange(e)}
+              />
+            <TextField
+              margin="dense"
+              id="customer"
+              select
+              label="Select Customer"
+              value={training.customer}
+              name="customer"
+              onChange={e => handleInputChange(e)}
+              helperText="Customer linked to this training"
+            >
+              {props.customers.map((customer, idx) => (
+                <MenuItem key={idx} value={customer.links[0].href}>
+                  {customer.firstname} {customer.lastname}
+                </MenuItem>
+              ))}
+            </TextField>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={addTraining}>Add</Button>
+            </DialogActions>
+          </Dialog>
         </div>
       );
     }
